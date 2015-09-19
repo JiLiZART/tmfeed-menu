@@ -54,17 +54,39 @@ body {
   }
 }
 
+.content {
+  margin-top: 44px;
+  margin-bottom: 44px;
+}
+
+.content::-webkit-scrollbar {
+  width: 5px;
+}
+
+.content::-webkit-scrollbar-thumb:vertical {
+  margin: 5px;
+  background-color: #999;
+  -webkit-border-radius: 5px;
+}
+
+.content::-webkit-scrollbar-button:start:decrement,
+.content::-webkit-scrollbar-button:end:increment {
+  height: 5px;
+  display: block;
+}
+
 .story {
   display: block;
   width: 100%;
   list-style: none;
   border: 0;
-  margin: 34px 0;
-  padding: 0;
+  margin: 0;
+  padding: 10px;
 }
 
 .story__title {
-  font-size: 1.375em;
+  margin-top: 0;
+  margin-bottom: 0;
   color: #666;
   cursor: pointer;
 }

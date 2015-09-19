@@ -8,16 +8,16 @@ export default class StoryList extends React.Component {
     var onMarkAsRead = this.props.onMarkAsRead;
     var storyNodes = _.map(this.props.stories, function (story, index) {
       return (
-        <li key={index} className='table-view-cell card'>
+        <div key={index} className='story-list__item card'>
           <Story story={story} onUrlClick={onUrlClick} onMarkAsRead={onMarkAsRead}/>
-        </li>
+        </div>
       )
     });
 
     return (
-      <ul className='content table-view'>
+      <div className='story-list'>
         {storyNodes}
-      </ul>
+      </div>
     )
   }
 }

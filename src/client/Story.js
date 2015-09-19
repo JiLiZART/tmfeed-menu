@@ -49,11 +49,11 @@ export default class Story extends React.Component {
 
         return (
             <div className={storyState}>
-                <h2 className='story__title'
-                          onClick={this.handleUrlClick.bind(this)}>{story.title}</h2>
+                <h4 className='story__title'
+                          onClick={this.handleUrlClick.bind(this)}>{story.title}</h4>
 
                 <div className='story__meta'>
-                    <span className={'story__meta-item story__site icon icon_name_site-' + story.site}></span>
+                    <span className={'story__meta-item story__site story__site-' + story.site}></span>
 
                     <span className='story__meta-item story__comments'
                         onClick={this.handleExternalUrlOnClick.bind(this)}>

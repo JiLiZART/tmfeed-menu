@@ -1,6 +1,6 @@
 import Events from 'events'
 import Firebase from 'firebase'
-import Moment from 'moment'
+import moment from 'moment'
 import URL from 'url'
 import request from 'request';
 import _ from 'lodash'
@@ -34,7 +34,7 @@ export default class StoryManager extends Events.EventEmitter {
                 return
             }
 
-            story.timeAgo = Moment.unix(story.time).fromNow();
+            story.timeAgo = moment.unix(story.time).fromNow();
             story.yurl = self.getYurl(story.id);
             story.by_url = self.getByUrl(story.by);
 
@@ -73,10 +73,6 @@ export default class StoryManager extends Events.EventEmitter {
                 callback(error);
             }
         });
-
-        var error = function (err) {
-            callback(err)
-        };
 
         var success = function (storyIds) {
             self.emit('story-manager-status', {type: type, status: StoryManagerStatus.SYNCING_STATUS});
@@ -145,25 +141,31 @@ export default class StoryManager extends Events.EventEmitter {
     }
 
     getAllUrl() {
-        return this.getApiUrl('all_alltime');
+        return this.getApiUrl('all', 'alltime');
     }
 
     getInteresingUrl() {
-        return this.getApiUrl('interesting_alltime');
+        return this.getApiUrl('interesting', 'alltime');
     }
 
-    getTopDailyUrl() {
-        return this.getApiUrl('top_daily');
+    getTopUrl(period) {
+        return this.getApiUrl('top', period);
     }
 
-    getApiUrl(type, resources = ['habrahabr', 'megamozg', 'geektimes']) {
-        return 'http://tmfeed.ru/posts/' + resources.join('-') + '_' + type + '.json';
+    /**
+     * Returns tmfeed.ru formed url
+     * @param {String} type
+     * @param {String} [period] period, can be 'daily', 'weekly', 'monthly', 'alltime'
+     * @param {Array} [resources]
+     * @returns {string}
+     */
+    getApiUrl(type, period = 'alltime', resources = ['habrahabr', 'megamozg', 'geektimes']) {
+        return 'http://tmfeed.ru/posts/' + resources.join('-') + '_' + type + '_' + period + '.json';
     }
 
     getUrlByType(type) {
-
         if (type === StoryType.TOP_TYPE) {
-            return this.getTopDailyUrl();
+            return this.getTopUrl('daily');
         } else if (type === StoryType.INTERESTING_TYPE) {
             return this.getInteresingUrl();
         } else if (type === StoryType.ALL_TYPE) {

@@ -1,73 +1,79 @@
 import Events from 'events'
 import autoUpdater from 'auto-updater'
 
+const UPDATE_URL = 'https://hackermenu.io/updates?version=';
+
 export default class AutoUpdateManager extends Events.EventEmitter {
-  constructor (version, logger) {
-    super();
-    this.version = version;
-    // this.feedUrl = 'http://localhost:5000/updates?version=' + version
-    this.feedUrl = 'https://hackermenu.io/updates?version=' + version
-    this.state = AutoUpdateManager.IDLE_STATE
-    this.logger = logger;
+    constructor(version, logger) {
+        super();
+        this.version = version;
+        this.feedUrl = UPDATE_URL + version;
+        this.state = AutoUpdateManager.IDLE_STATE;
+        this.logger = logger;
 
-    process.nextTick(this.setupAutoUpdater.bind(this))
-  }
+        process.nextTick(this.setupAutoUpdater.bind(this))
+    }
 
-  setupAutoUpdater () {
-    var self = this;
+    setupAutoUpdater() {
+        var self = this;
 
-    autoUpdater.on('error', function (event, message) {
-      self.setState(AutoUpdateManager.ERROR_STATE)
-      self.logger.error('auto-updater-manager.error', { error: message })
-    });
+        autoUpdater.on('error', function (event, message) {
+            self.setState(AutoUpdateManager.ERROR_STATE);
+            self.logger.error('auto-updater-manager.error', {error: message})
+        });
 
-    autoUpdater.setFeedUrl(this.feedUrl)
+        autoUpdater.setFeedUrl(this.feedUrl);
 
-    autoUpdater.on('checking-for-update', function () {
-      self.setState(AutoUpdateManager.CHECKING_STATE)
-    });
+        autoUpdater.on('checking-for-update', function () {
+            self.setState(AutoUpdateManager.CHECKING_STATE)
+        });
 
-    autoUpdater.on('update-not-available', function () {
-      self.setState(AutoUpdateManager.NO_UPDATE_AVAILABLE_STATE)
-    });
+        autoUpdater.on('update-not-available', function () {
+            self.setState(AutoUpdateManager.NO_UPDATE_AVAILABLE_STATE)
+        });
 
-    autoUpdater.on('update-available', function () {
-      self.setState(AutoUpdateManager.DOWNLOADING_STATE)
-    });
+        autoUpdater.on('update-available', function () {
+            self.setState(AutoUpdateManager.DOWNLOADING_STATE)
+        });
 
-    autoUpdater.on('update-downloaded', function (event, releaseNotes, releaseName, releaseDate, updateUrl) {
-      self.setState(AutoUpdateManager.UPDATE_AVAILABLE_STATE)
-      self.logger.info('auto-update-manager.update-downloaded', {releaseNotes: releaseNotes, releaseName: releaseName, releaseDate: releaseDate, updateUrl: updateUrl})
+        autoUpdater.on('update-downloaded', function (event, releaseNotes, releaseName, releaseDate, updateUrl) {
+            self.setState(AutoUpdateManager.UPDATE_AVAILABLE_STATE)
+            self.logger.info('auto-update-manager.update-downloaded', {
+                releaseNotes: releaseNotes,
+                releaseName: releaseName,
+                releaseDate: releaseDate,
+                updateUrl: updateUrl
+            });
 
-      self.emit('update-available', releaseName)
-    });
+            self.emit('update-available', releaseName)
+        });
 
-    this.scheduleUpdateCheck()
-  }
+        this.scheduleUpdateCheck()
+    }
 
-  setState (state) {
-    this.state = state;
-    this.emit('state-changed', state);
-    this.logger.info('auto-update-manager.state-changed', { state: state })
-  }
+    setState(state) {
+        this.state = state;
+        this.emit('state-changed', state);
+        this.logger.info('auto-update-manager.state-changed', {state: state})
+    }
 
-  scheduleUpdateCheck () {
-    var fourHours = 1000 * 60 * 60 * 4;
-    setInterval(this.checkForUpdates.bind(this), fourHours);
-    this.checkForUpdates()
-  }
+    scheduleUpdateCheck() {
+        var fourHours = 1000 * 60 * 60 * 4;
+        setInterval(this.checkForUpdates.bind(this), fourHours);
+        this.checkForUpdates()
+    }
 
-  checkForUpdates () {
-    autoUpdater.checkForUpdates();
-  }
+    checkForUpdates() {
+        autoUpdater.checkForUpdates();
+    }
 
-  quitAndInstall () {
-    autoUpdater.quitAndInstall();
-  }
+    quitAndInstall() {
+        autoUpdater.quitAndInstall();
+    }
 
- isUpdateAvailable () {
-   return this.state === AutoUpdateManager.UPDATE_AVAILABLE_STATE;
- }
+    isUpdateAvailable() {
+        return this.state === AutoUpdateManager.UPDATE_AVAILABLE_STATE;
+    }
 }
 
 AutoUpdateManager.IDLE_STATE = 'idle';
