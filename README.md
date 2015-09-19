@@ -4,6 +4,7 @@
 базирована на [Hacker Menu](https://hackermenu.io/). Внутри [Electron](http://electron.atom.io/) и [Node.js](https://nodejs.org).
 
 Скриншот:
+
 ![TM Feed Screenshot](assets/images/screenshot.png)
 ## Установка
 
