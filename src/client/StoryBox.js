@@ -1,16 +1,18 @@
 import React from 'react'
 import _ from 'lodash'
 import Client from 'electron-rpc/client'
-import StoryList from './story_list.js'
-import Spinner from './spinner.js'
-import Menu from './menu.js'
-import StoryType from '../model/story_type'
+import StoryList from './StoryList.js'
+import Spinner from './Spinner.js'
+import Menu from './Menu.js'
+import NavBar from './NavBar.js'
+import StoryType from '../model/StoryType.js'
 
 export default class StoryBox extends React.Component {
   constructor (props) {
-    super(props)
+    super(props);
 
-    this.client = new Client()
+    this.client = new Client();
+
     this.state = {
       stories: [],
       selected: StoryType.TOP_TYPE,
@@ -21,18 +23,18 @@ export default class StoryBox extends React.Component {
   }
 
   componentDidMount () {
-    var self = this
+    var self = this;
 
     self.client.request('current-version', function (err, version) {
       if (err) {
-        console.error(err)
+        console.error(err);
         return
       }
 
       self.setState({ version: version })
-    })
+    });
 
-    self.onNavbarClick(self.state.selected)
+    self.onNavClick(self.state.selected)
   }
 
   onQuitClick () {
@@ -45,59 +47,51 @@ export default class StoryBox extends React.Component {
 
   onMarkAsRead (id) {
     this.client.request('mark-as-read', { id: id }, function () {
-      var story = _.findWhere(this.state.stories, { id: id })
-      story.hasRead = true
+      var story = _.findWhere(this.state.stories, { id: id });
+      story.hasRead = true;
+
       this.setState({ stories: this.state.stories })
-    }.bind(this))
+    }.bind(this));
   }
 
-  onNavbarClick (selected) {
-    var self = this
+  onNavClick (selected) {
+    var self = this;
 
-    self.setState({ stories: [], selected: selected })
-    self.client.localEventEmitter.removeAllListeners()
+    self.setState({ stories: [], selected: selected });
+    self.client.localEventEmitter.removeAllListeners();
 
     self.client.on('update-available', function (err, releaseVersion) {
       if (err) {
-        console.error(err)
+        console.error(err);
         return
       }
 
-      self.setState({ status: 'update-available', upgradeVersion: releaseVersion })
-    })
+      self.setState({ status: 'update-available', upgradeVersion: releaseVersion });
+    });
 
-    var storycb = function (err, storiesMap) {
+    var storyCallback = function (err, storiesMap) {
       if (err) {
         return
       }
 
-      // console.log(JSON.stringify(Object.keys(storiesMap), null, 2))
+      var stories = storiesMap[self.state.selected];
 
-      var stories = storiesMap[self.state.selected]
       if (!stories) {
         return
       }
 
       // console.log(JSON.stringify(stories, null, 2))
-      self.setState({stories: stories})
-    }
+      self.setState({stories: stories});
+    };
 
-    self.client.request(selected, storycb)
-    self.client.on(selected, storycb)
+    self.client.request(selected, storyCallback);
+    self.client.on(selected, storyCallback);
   }
 
   render () {
-    var navNodes = _.map(StoryType.ALL, function (selection) {
-      var className = 'control-item'
-      if (this.state.selected === selection) {
-        className = className + ' active'
-      }
-      return (
-        <a key={selection} className={className} onClick={this.onNavbarClick.bind(this, selection)}>{selection}</a>
-      )
-    }, this)
 
-    var content = null
+    var content = null;
+
     if (_.isEmpty(this.state.stories)) {
       content = <Spinner />
     } else {
@@ -106,11 +100,7 @@ export default class StoryBox extends React.Component {
 
     return (
       <div className='story-menu'>
-        <header className='bar bar-nav'>
-          <div className='segmented-control'>
-            {navNodes}
-          </div>
-        </header>
+        <NavBar types={StoryType.ALL} selected={this.state.selected} onNavClick={this.onNavClick.bind(this)} />
         {content}
         <Menu onQuitClick={this.onQuitClick.bind(this)} status={this.state.status} version={this.state.version} upgradeVersion={this.state.upgradeVersion} />
       </div>

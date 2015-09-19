@@ -5,19 +5,20 @@ import _ from 'lodash'
 
 export default class ReadCache {
   constructor (folder, cacheSize, logger) {
-    this.path = path.join(folder, 'Storage', 'db.json')
+    this.path = path.join(folder, 'Storage', 'db.json');
     this.cache = LRU({
       max: cacheSize
-    })
-    this.logger = logger
+    });
+    this.logger = logger;
 
     setInterval(function () {
       this.store()
-    }.bind(this), 1000 * 60 * 60) // every hour
+    }.bind(this), 1000 * 60 * 60); // every hour
   }
 
   load () {
-    var result = {}
+    var result = {};
+
     try {
       result = JSON.parse(fs.readFileSync(this.path, 'utf8'))
     } catch (e) {
@@ -34,13 +35,14 @@ export default class ReadCache {
   }
 
   store () {
-    this.logger.info('read-cache.store')
+    this.logger.info('read-cache.store');
 
-    var result = []
+    var result = [];
     this.cache.forEach(function (value, key) {
       result.push(key)
-    })
-    fs.writeFileSync(this.path, JSON.stringify({ read: result }), 'utf8')
+    });
+
+    fs.writeFileSync(this.path, JSON.stringify({ read: result }), 'utf8');
   }
 
   set (val) {
