@@ -1,6 +1,6 @@
 import React from 'react'
 
-export default class Menu extends React.Component {
+export default class Footer extends React.Component {
     handleOnClick(e) {
         e.preventDefault();
         this.props.onQuitClick()
@@ -16,17 +16,17 @@ export default class Menu extends React.Component {
         }
 
         return (
-            <div className='bar bar-standard bar-footer'>
+            <footer className='bar bar-standard bar-footer'>
                 <button className='btn pull-left'>{statusText}</button>
                 <button className='btn pull-right' onClick={this.handleOnClick.bind(this)}>
                     {buttonText}
                 </button>
-            </div>
+            </footer>
         )
     }
 }
 
-Menu.propTypes = {
+Footer.propTypes = {
     status: React.PropTypes.string.isRequired,
     version: React.PropTypes.string.isRequired,
     upgradeVersion: React.PropTypes.string.isRequired,

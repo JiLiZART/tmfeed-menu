@@ -53,7 +53,7 @@ export default class Story extends React.Component {
                           onClick={this.handleUrlClick.bind(this)}>{story.title}</h4>
 
                 <div className='story__meta'>
-                    <span className={'story__meta-item story__site story__site-' + story.site}></span>
+                    <span className={'story__meta-icon site-icon site-icon--' + story.site}></span>
 
                     <span className='story__meta-item story__comments'
                         onClick={this.handleExternalUrlOnClick.bind(this)}>

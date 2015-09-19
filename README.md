@@ -1,32 +1,23 @@
-# Hacker Menu
+# TM Feed Меню
 
-[Hacker Menu](https://hackermenu.io/) stays on your menu bar and delivers the top news stories from [Y Combinator news aggregator](https://news.ycombinator.com/),
-built with love by [@jingweno](https://github.com/jingweno) & [@lokywin](https://github.com/lokywin). It's powered by [Electron](http://electron.atom.io/) and [Node.js](https://nodejs.org).
+Висит в трее и показывает ленту новостей с [аггрегатора](http://tmfeed.ru/) [Тематических Медиа](https://tmtm.ru),
+базирована на [Hacker Menu](https://hackermenu.io/). Внутри [Electron](http://electron.atom.io/) и [Node.js](https://nodejs.org).
 
-Website: [https://hackermenu.io](https://hackermenu.io).
+Скриншот:
+![TM Feed Screenshot](assets/images/screenshot.png)
+## Установка
 
-Screenshot:
-![Hacker Menu Screenshot](images/screenshot.png)
-## Installation
+Скачать последние билды можно в разделе [releases](https://github.com/JiLiZART/tmfeed-menu/releases). 
 
-Download the latest build for your platform from [releases](https://github.com/jingweno/hacker-menu/releases). We only have OSX build now, and we're working Windows and Linux builds. Feel free to contribute if you can't wait :heart:.
+## Разработка
 
-## Development
-
-You need to have the latest [io.js](https://iojs.org) or [node.js](https://nodejs.org/) installed.
+Нужен последний билд [node.js](https://nodejs.org/).
 
 ```bash
-$ npm install # installs dependencies
-$ npm start # starts the app in the electron wrapper
+$ npm install # ставим зависимости
+$ npm start # стартуем приложение
 ```
 
-Other useful tasks:
+## Лицензия
 
-```bash
-$ npm test # runs tests
-$ npm run watch # watches and rebuilds assets
-$ npm run release # builds and packages the Mac app
-```
-## License
-
-See [LICENSE](https://github.com/jingweno/hacker-menu/blob/master/LICENSE).
+Смотри [LICENSE](https://github.com/jingweno/hacker-menu/blob/master/LICENSE).

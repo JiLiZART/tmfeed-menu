@@ -8,7 +8,7 @@ export default class StoryList extends React.Component {
     var onMarkAsRead = this.props.onMarkAsRead;
     var storyNodes = _.map(this.props.stories, function (story, index) {
       return (
-        <div key={index} className='story-list__item card'>
+        <div key={index} className='story-list__item'>
           <Story story={story} onUrlClick={onUrlClick} onMarkAsRead={onMarkAsRead}/>
         </div>
       )

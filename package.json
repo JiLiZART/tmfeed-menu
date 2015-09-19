@@ -1,19 +1,19 @@
 {
-  "name": "hacker-menu",
-  "productName": "Hacker Menu",
+  "name": "tmfeed-menu",
+  "productName": "TM Feed Menu",
   "version": "1.1.3",
-  "description": "A menu to read Hacker News",
+  "description": "A menu to read TM Feed",
   "main": "./dist/index.js",
   "repository": {
     "type": "git",
-    "url": "https://github.com/jingweno/hacker-menu.git"
+    "url": "https://github.com/JiLiZART/tmfeed-menu.git"
   },
   "engines": {
     "node": "0.12.7",
     "npm": "2.11.3"
   },
   "bugs": {
-    "url": "https://github.com/jingweno/hacker-menu/issues"
+    "url": "https://github.com/JiLiZART/tmfeed-menu/issues"
   },
   "license": "MIT",
   "scripts": {
@@ -29,7 +29,10 @@
     "package": "npm run build && ./script/package.sh",
     "release": "npm run package && npm run compress"
   },
-  "author": "Jingwen Owen Ou",
+  "author": [
+    "Jingwen Owen Ou",
+    "Nikolay Kost <jilizart@gmail.com>"
+  ],
   "config": {
     "electron_version": "0.31.2"
   },

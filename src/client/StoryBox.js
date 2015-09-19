@@ -3,8 +3,8 @@ import _ from 'lodash'
 import Client from 'electron-rpc/client'
 import StoryList from './StoryList.js'
 import Spinner from './Spinner.js'
-import Menu from './Menu.js'
-import NavBar from './NavBar.js'
+import Footer from './Footer.js'
+import Header from './Header.js'
 import StoryType from '../model/StoryType.js'
 
 export default class StoryBox extends React.Component {
@@ -100,15 +100,15 @@ export default class StoryBox extends React.Component {
 
         return (
             <div className='story-menu'>
-                <NavBar types={StoryType.ALL}
+                <Header types={StoryType.ALL}
                     selected={this.state.selected}
                     onNavClick={this.onNavClick.bind(this)}/>
 
-                <div className='content'>
+                <section className='content'>
                     {content}
-                </div>
+                </section>
                 
-                <Menu onQuitClick={this.onQuitClick.bind(this)}
+                <Footer onQuitClick={this.onQuitClick.bind(this)}
                         status={this.state.status}
                         version={this.state.version}
                         upgradeVersion={this.state.upgradeVersion}/>

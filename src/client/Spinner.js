@@ -4,7 +4,7 @@ export default class Spinner extends React.Component {
   render () {
     return (
       <div className='spinner'>
-        Loading...
+        Загрузка...
       </div>
     )
   }
