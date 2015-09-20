@@ -1,6 +1,6 @@
 # TM Feed Меню
 
-Висит в трее и показывает ленту новостей с [аггрегатора](http://tmfeed.ru/) [Тематических Медиа](https://tmtm.ru),
+Висит в трее и показывает ленту новостей с [агрегатора](http://tmfeed.ru/) [Тематических Медиа](https://tmtm.ru),
 базирована на [Hacker Menu](https://hackermenu.io/). Внутри [Electron](http://electron.atom.io/) и [Node.js](https://nodejs.org).
 
 Скриншот:
@@ -21,4 +21,4 @@ $ npm start # стартуем приложение
 
 ## Лицензия
 
-Смотри [LICENSE](https://github.com/jingweno/hacker-menu/blob/master/LICENSE).
+Смотри [LICENSE](https://github.com/JiLiZART/tmfeed-menu/blob/master/LICENSE).
