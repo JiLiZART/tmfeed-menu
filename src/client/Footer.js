@@ -8,7 +8,7 @@ export default class Footer extends React.Component {
 
     render() {
         var statusText = 'Версия ' + this.props.version;
-        var buttonText = 'Закрыть';
+        var buttonText = 'Выход';
 
         if (this.props.status === 'update-available') {
             statusText += ' (доступна версия ' + this.props.upgradeVersion + ' , перезапустите для апдейта)';
